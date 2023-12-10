@@ -29,6 +29,9 @@ pub fn generate_account(
     } else {
         quote! {}
     };
+    let derive_debug = quote! {
+        #[derive(Debug)]
+    };
     let derive_account = if opts.zero_copy {
         let repr = if opts.packed {
             quote! {
@@ -53,6 +56,7 @@ pub fn generate_account(
     let struct_name = format_ident!("{}", account_name);
     let fields_rendered = generate_fields(fields);
     quote! {
+        #derive_debug
         #derive_account
         #[doc = #doc]
         #derive_copy
